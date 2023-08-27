@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_user</title>
+</head>
+<body>
+
+<div>
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+<form action="/add_users" method="POST">
+  <label for="username">Enter a chosen username</label>
+  <input type="text" id="username" name="username"  value="{{username}}" placeholder="username" required minlength="1">
+    <br>
+
+    <label for ="password">Enter a chosen password</label>
+    <input type="password" id="password" name="password" value="{{ password }}" placeholder="password" required minlength="8">
+    <label for ="check_password">Enter a chosen password</label>
+    <input type="password" id="check_password" name="check_password" value="{{ check_password }}" placeholder="confirm password" required minlength="8">
+    <br> <br> <br>
+    <input type="submit" value="Submit">
+
+</form>
+
+</body>
+</html>

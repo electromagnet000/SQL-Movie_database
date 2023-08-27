@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update_user</title>
+</head>
+<body>
+
+<div class="top_left">
+    <a href="/dashboard">Dashboard</a>
+</div>
+
+
+<div>
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+<div>
+<form action="/update/{{ user_id }}" method="POST">
+    {{form.hidden_tag()}}
+    {{ form.username.label }}
+    {{ form.username() }}
+    <br>
+    {{ form.password.label }}
+    {{ form.password() }}
+    <br>
+    {{ form.check_password.label }}
+    {{ form.check_password() }}
+    <br>
+    {{ form.submit() }}
+
+</form>
+</div>
+
+
+</body>
+</html>

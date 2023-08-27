@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>account_settings</title>
+</head>
+<body>
+
+<div class="top_left">
+    <a href="/dashboard">Dashboard</a>
+</div>
+
+<div>
+    <h1>{{ user.username }} : Settings</h1>
+</div>
+
+<a href="/update/{{ user.id }}">Update account details</a>
+<a href="/accessibility_settings/{{ user.id }}">Accessibility settings</a>
+
+<form action="/delete/{{ user.id }}" method="POST">
+  <label for="confirm_username">Enter username to delete user</label>
+  <input type="text" id="confirm_username" name="confirm_username" value="{{ confirm_username }}" placeholder="{{ user.username }}">
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

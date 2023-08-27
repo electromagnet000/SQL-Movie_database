@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+ <div>
+    <a href="/add_users">Dont have an account? sign up!</a>
+  </div>
+
+<div>
+  <h1>Login</h1>
+</div>
+
+<div>
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+<div>
+
+<form action="/login" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username.label }}
+    {% if user_name %}
+        <input type="text" name="username" id="username" value="{{ username }}" placeholder="{{ user_name }}">
+    {% else %}
+        <input type="text" name="username" id="username" value="{{ username }}" placeholder="enter username">
+    {% endif %}
+
+    <br>
+    {{ form.password.label }}
+    {{ form.password() }}
+    <br>
+    {{ form.submit() }}
+</form>
+
+
+</div>
+</body>
+</html>

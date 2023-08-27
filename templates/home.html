@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>users</title>
+</head>
+<body>
+
+<div>
+<a href="add_users">add_user</a>
+    <br>
+    <a href="login">Login</a>
+</div>
+
+<div>
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+<div>
+    {% if users %}
+        {% for user in users %}
+
+            <a href="/login?user={{ user.username }}">{{ user.username }}</a>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Movies</title>
+</head>
+<body>
+
+<div class="top_left">
+    <a href="/dashboard">Dashboard</a>
+</div>
+
+
+<div class="Flash_messages">
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+
+
+
+<div class="page_intro">
+    <form action="/dashboard/{{ user.id }}/add_movie" method="POST">
+    <label for="movie_chosen">Which movie would you like to add?</label>
+    <input type="text" id="movie_chosen" name="movie_chosen" value="{{ movie_chosen }}" placeholder="movie name">
+    <br>
+    <label for="notes">Anything of note about this film?</label>
+    <input type="text" id="notes" name="notes" value="{{ notes }}" placeholder="your thoughts">
+    <br>
+    <input type="submit" value="Submit">
+</form>
+</div>
+
+</body>
+</html>
