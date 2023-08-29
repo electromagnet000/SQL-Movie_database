@@ -2,19 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Accessibility Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
+    <title>Title</title>
 </head>
 <body>
-
-<div>
-  <a href="/dashboard">Dashboard</a>
+<div class="top_left"><a class="a_button" href="/dashboard">Back</a></div>
+<div class="personalised_settings_box">
+    <div>
+    <label>What would you like the background color to be?</label>
+    </div>
+    <div>
+        <button class="color_button bg_green" onclick="changeBackgroundColor('#007a78')">Green</button>
+    <button class="color_button bg_blue" onclick="changeBackgroundColor('#042F45')">Blue</button>
+    <button class="color_button bg_white" onclick="changeBackgroundColor('#FBFBFB')">White</button>
+    <button class="color_button bg_orange" onclick="changeBackgroundColor('#dc582a')">Orange</button>
+    <button class="color_button bg_purple" onclick="changeBackgroundColor('#5d3754')">Purple</button>
 </div>
+    <div>
+        <button class="submit_button" onclick="changeBackgroundColor('#1e1e1e')">Restore Default</button>
 
-<div>
-  <h1>Change text size</h1>
-  <h1>Change background color</h1>
-  <h1>Change text color</h1>
+    </div>
+
 </div>
-
 </body>
 </html>

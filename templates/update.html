@@ -2,36 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>update_user</title>
+    <title>update details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
+</head>
 </head>
 <body>
 
 <div class="top_left">
-    <a href="/dashboard">Dashboard</a>
+    <a class="a_button" href="/dashboard">Dashboard</a>
 </div>
 
 
-<div>
+<div class="center_page">
+
+    <div>
+        <h2>change your details</h2>
+        <div class="flashed_messages">
 <ul>
 {% for message in get_flashed_messages() %}
   <li>{{ message }}</li>
   {% endfor %}
 </ul>
 </div>
+    </div>
 
-<div>
-<form action="/update/{{ user_id }}" method="POST">
+<form class="form_add_user" action="/update/{{ user_id }}" method="POST">
     {{form.hidden_tag()}}
     {{ form.username.label }}
-    {{ form.username() }}
+    {{ form.username(class_="input_box") }}
     <br>
     {{ form.password.label }}
-    {{ form.password() }}
+    {{ form.password(class_="input_box") }}
     <br>
     {{ form.check_password.label }}
-    {{ form.check_password() }}
+    {{ form.check_password(class_="input_box") }}
     <br>
-    {{ form.submit() }}
+    {{ form.submit(class_="submit_button") }}
 
 </form>
 </div>

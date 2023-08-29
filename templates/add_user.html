@@ -3,30 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>add_user</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div>
-<ul>
+ <div>
+    <a class="a_button top_left" href="/login">have an account? log in!</a>
+  </div>
+
+
+
+
+
+<div class="center_page">
+
+    <div class="side_by_side">
+         <div>
+     <h2>Please enter your details to make an account</h2>
+ </div>
+
+        <div>
+
+<ul  class="flashed_messages">
 {% for message in get_flashed_messages() %}
   <li>{{ message }}</li>
   {% endfor %}
 </ul>
 </div>
 
-<form action="/add_users" method="POST">
+<form class="form_add_user" action="/add_users" method="POST">
   <label for="username">Enter a chosen username</label>
-  <input type="text" id="username" name="username"  value="{{username}}" placeholder="username" required minlength="1">
+
+    <input class="input_box" type="text" id="username" name="username"  value="{{username}}" placeholder="username" required minlength="1">
     <br>
 
-    <label for ="password">Enter a chosen password</label>
-    <input type="password" id="password" name="password" value="{{ password }}" placeholder="password" required minlength="8">
-    <label for ="check_password">Enter a chosen password</label>
-    <input type="password" id="check_password" name="check_password" value="{{ check_password }}" placeholder="confirm password" required minlength="8">
-    <br> <br> <br>
-    <input type="submit" value="Submit">
+    <label for="password">Enter a chosen password</label>
+    <input class="input_box" type="password" id="password" name="password" value="{{password}}" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="password" required>
+    <br>
+    <label for="check_password">Please confirm password</label>
+    <input class="input_box" type="password" id="check_password" name="check_password" value="{{ check_password }}" placeholder="confirm password" required minlength="8" >
+    <br> <br>
+
+
+    <input class="submit_button" type="submit" value="Submit">
 
 </form>
+        </div>
+
+</div>
+
+ <div class="center">
+<div id="message">
+      <h3>Password must contain the following:</h3>
+      <p id="letter" class="invalid">A lowercase letter</p>
+      <p id="capital" class="invalid">A capital (uppercase) letter</p>
+      <p id="number" class="invalid">A number</p>
+      <p id="length" class="invalid">Minimum 8 characters</p>
+    </div>
+ </div>
+<script src="{{url_for('static', filename='scripts.js')}}"></script>
 
 </body>
 </html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
+</head>
+
+
+<body>
+
+<div class="top_left">
+    <a class="a_button" href="/dashboard">Dashboard</a>
+</div>
+
+
+
+<div class="flashed_messages">
+<ul>
+{% for message in get_flashed_messages() %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+</div>
+    </div>
+
+
+<div class="center_page">
+<div>
+  <form action="/dashboard/{{user.id}}/update_movie/{{movie_id}}" method="POST">
+      <label for="notes">Change what you think about this film</label>
+    <input class="input_box" type="text" name="notes" id="notes" value="{{ notes }}">
+      <input class="submit_button" type="submit" value="Submit">
+  </form>
+</div>
+
+
+</div>
+</body>
+</html>

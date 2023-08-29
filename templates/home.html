@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div>
-<a href="add_users">add_user</a>
-    <br>
-    <a href="login">Login</a>
+<div class="top_left">
+    <a class="a_button" href="login">Login</a>
 </div>
 
-<div>
+
+<div class="flashed_messages">
 <ul>
 {% for message in get_flashed_messages() %}
   <li>{{ message }}</li>
@@ -20,12 +20,21 @@
 </ul>
 </div>
 
-<div>
-    {% if users %}
-        {% for user in users %}
+<div class="page_intro">
+    <h1>Welcome!</h1>
+</div>
 
-            <a href="/login?user={{ user.username }}">{{ user.username }}</a>
+<div class="center good_margin">
+<a class="a_button" href="add_users">Add user</a>
+</div>
+
+<div class="users_list">
+    {% if users %}
+        <ul>
+        {% for user in users %}
+            <li><a  class="username" href="/login?user={{ user.username }}">{{ user.username }}</a></li>
         {% endfor %}
+        </ul>
     {% endif %}
 </div>
 </body>

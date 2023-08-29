@@ -3,44 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
- <div>
-    <a href="/add_users">Dont have an account? sign up!</a>
+ <div class="top_left">
+    <a class="a_button" href="/add_users">Dont have an account? sign up!</a>
   </div>
 
-<div>
-  <h1>Login</h1>
-</div>
+
 
 <div>
-<ul>
+
+    <div class="center_page">
+
+<div class="left_side_message">
+  <h1>Lets login!</h1>
+    <div>
+    <div>
+<ul  class="flashed_messages">
 {% for message in get_flashed_messages() %}
   <li>{{ message }}</li>
   {% endfor %}
 </ul>
 </div>
 
-<div>
+</div>
+</div>
 
-<form action="/login" method="POST">
+
+<form class="form_add_user" action="/login" method="POST">
     {{ form.hidden_tag() }}
     {{ form.username.label }}
     {% if user_name %}
-        <input type="text" name="username" id="username" value="{{ username }}" placeholder="{{ user_name }}">
+        <input class="input_box" type="text" name="username" id="username" value="{{ username }}" placeholder="{{ user_name }}">
     {% else %}
-        <input type="text" name="username" id="username" value="{{ username }}" placeholder="enter username">
+        <input class="input_box" type="text" name="username" id="username" value="{{ username }}" placeholder="enter username">
     {% endif %}
 
-    <br>
     {{ form.password.label }}
-    {{ form.password() }}
+    {{ form.password(class_="input_box") }}
     <br>
-    {{ form.submit() }}
+    {{ form.submit(class_="submit_button") }}
+
 </form>
-
-
 </div>
+</div>
+
+
 </body>
 </html>

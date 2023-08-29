@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy import create_engine, text, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker
 from flask import Flask, render_template, request, redirect, url_for, flash, session
@@ -9,13 +11,22 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from API_JSON.API_functionality import API_add_movie
 
+
+"""
+os filepath defined
+"""
+# using os to dynamicaly create the path relative to the current scripts location address
+current_directory =  os.path.dirname(os.path.abspath(__file__))
+relative_db_path = os.path.join(current_directory, 'data', 'Userdata.sqlite')
+
+
 """
 Global variables
 """
 
-engine = create_engine("sqlite:///C:/Users/sergi/PycharmProjects/pythonProject5/data/Userdata.sqlite", echo=True)
+engine = create_engine(f"sqlite:///{relative_db_path}", echo=True)
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///C:/Users/sergi/PycharmProjects/pythonProject5/data/Userdata.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{relative_db_path}"
 app.config['SECRET_KEY'] = "super_secret_key"
 bcrypt = Bcrypt()
 bcrypt.init_app(app)
@@ -96,6 +107,7 @@ class Data(db.Model):
     data_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     movie_id = db.Column(db.String, db.ForeignKey("movies.id"))
     user_id = db.Column(db.String, db.ForeignKey("users.id"))
+    notes = db.Column(db.String)
 
     def __repr__(self):
         return f"{self.name}"
@@ -119,9 +131,11 @@ class sql_data_manager():
         user_movies = Data.query.filter_by(user_id=current_user.id).all()
         movies = []
 
+
         for data in user_movies:
             movie_id = data.movie_id
             movie = Movies.query.get(movie_id)
+            movie.notes = data.notes
             movies.append(movie)
 
         return movies
@@ -179,7 +193,7 @@ The users_home page
 def dashboard():
     if current_user.is_authenticated:
         movies = sql_data_manager.get_user_movies()
-        return render_template("dashboard.html", user=current_user, movies=movies)
+        return render_template("dashboard.html", user=current_user, movies=movies,)
 
 
 @app.route("/accountSettings/<int:user_id>", methods=['GET', "POST"])
@@ -269,15 +283,19 @@ def delete(user_id):
 
         return render_template("delete_user.html", user=name_to_delete, user_id=name_to_delete.id)
 
+# adds a movie
 @app.route("/dashboard/<int:user_id>/add_movie", methods=["GET", "POST"])
 def add_movie(user_id):
+
+    movies = sql_data_manager.get_user_movies()
+
     if request.method == "POST":
 
         movie_title = request.form.get("movie_chosen")
         user_notes = request.form.get("notes")
         try:
-            movie = API_add_movie(movie_title, user_notes)
-            new_movie = Movies(id=movie["imdbID"], title=movie["Title"], year=movie["Year"], poster=movie["Poster"], imdb_rating=movie["imdbRating"], notes=movie["Notes"])
+            movie = API_add_movie(movie_title)
+            new_movie = Movies(id=movie["imdbID"], title=movie["Title"], year=movie["Year"], poster=movie["Poster"], imdb_rating=movie["imdbRating"])
             user_has_movie = Data.query.filter_by(movie_id=new_movie.id, user_id=user_id).first()
 
             #checks if user already has the movie in their database
@@ -290,14 +308,14 @@ def add_movie(user_id):
             # if movie is in the database
             if check_movie:
                 #skip adding the movie to the movie table, and links the imdbID to the user_id
-                new_data = Data(movie_id=new_movie.id, user_id=user_id)
+                new_data = Data(movie_id=new_movie.id, user_id=user_id, notes=user_notes)
                 db.session.add(new_data)
 
             # if movie is not in the movie database
             else:
                 # add it to the movie table database
                 db.session.add(new_movie)
-                new_data = Data(movie_id=new_movie.id, user_id=user_id)
+                new_data = Data(movie_id=new_movie.id, user_id=user_id, notes=user_notes)
                 db.session.add(new_data)
 
             #commit the session
@@ -308,7 +326,29 @@ def add_movie(user_id):
             flash(f"There seems to be a problem : {e}")
             session.rollback()
 
-    return render_template("add_movie.html", user=current_user, user_id=user_id)
+    return render_template("add_movie.html", user=current_user, user_id=user_id, movies=movies)
+
+#update movie
+@app.route("/dashboard/<int:user_id>/update_movie/<string:movie_id>", methods=["GET", "POST"])
+def update_movie(user_id, movie_id):
+
+    # search data table for the user and movie corrolation
+    data_record = Data.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+
+    if request.method == "POST":
+        new_notes = request.form.get("notes")
+        try:
+            #assings the new value to the notes column
+            data_record.notes = new_notes
+            flash("Successfully updated the movie")
+            db.session.commit()
+            return redirect(url_for("dashboard"))
+        except Exception as e:
+            flash(f"There was a problem : {e}")
+
+    return render_template("update_movie.html", user=current_user, user_id=user_id, movie_id=movie_id)
+
+
 
 # deletes a users movie
 @app.route("/dashboard/<int:user_id>/delete_movie/<string:movie_id>", methods=["GET"])
@@ -317,6 +357,9 @@ def delete_movie(user_id, movie_id):
     db.session.delete(chosen_movie)
     db.session.commit()
     return redirect(url_for("dashboard"))
+
+
+
 
 # add user page
 @app.route("/add_users", methods=["GET", "POST"])

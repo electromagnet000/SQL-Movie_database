@@ -1,7 +1,7 @@
 import json
 import requests
 
-def API_add_movie(title, user_notes):
+def API_add_movie(title):
 
         # using my api key I can get access to the OMDB api
         API_KEY = "ae79a6f6"
@@ -24,8 +24,6 @@ def API_add_movie(title, user_notes):
             for key, value in fetched_data.items():
                 if key in requested_parameters:
                     requested_data[key] = value
-
-            requested_data["Notes"] = str(user_notes)
 
             # checks if anything was actually fetched
             try:

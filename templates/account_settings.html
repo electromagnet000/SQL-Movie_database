@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>account_settings</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
 </head>
 <body>
 
 <div class="top_left">
-    <a href="/dashboard">Dashboard</a>
+    <a class="a_button" href="/dashboard">Dashboard</a>
 </div>
 
-<div>
+<div class="center">
     <h1>{{ user.username }} : Settings</h1>
+
 </div>
-
-<a href="/update/{{ user.id }}">Update account details</a>
-<a href="/accessibility_settings/{{ user.id }}">Accessibility settings</a>
-
+    <div class="center">
 <form action="/delete/{{ user.id }}" method="POST">
   <label for="confirm_username">Enter username to delete user</label>
-  <input type="text" id="confirm_username" name="confirm_username" value="{{ confirm_username }}" placeholder="{{ user.username }}">
-    <input type="submit" value="Submit">
+  <input class="input_box" type="text" id="confirm_username" name="confirm_username" value="{{ confirm_username }}" placeholder="{{ user.username }}">
+    <input class="submit_button" type="submit" value="Submit">
 </form>
+        </div>
+<div>
+    <div class="setting_center font40">
+<a class="a_button" href="/update/{{ user.id }}">Update account details</a>
+<a class="a_button" href="/accessibility_settings/{{ user.id }}">Accessibility settings</a>
+</div>
 
+</div>
 </body>
 </html>

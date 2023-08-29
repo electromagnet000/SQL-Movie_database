@@ -1,0 +1,330 @@
+body {
+    color: white;
+    background-color: #1e1e1e;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+.page_intro {
+    display: flex;
+    justify-content: center;
+    font-family: sans-serif;
+    font-size: 30px;
+    }
+
+.top_left {
+    position: absolute;
+    display: flex;
+    margin: 20px;
+    gap: 20px;
+        }
+
+.center {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+.center_page {
+    height: calc(100vh - 20px);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    column-gap: 50px;
+
+  }
+
+.good_margin {
+    margin: 50px;
+    }
+
+.left_side_message {
+    border-right: 1px solid white;
+    padding: 50px;
+    }
+
+.users_list {
+    display: grid;
+    grid-auto-flow: column;
+    list-style: none;
+    gap: 20px;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: x-large;
+    }
+
+.users_list ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: x-large;
+    justify-content: center;
+}
+
+.username{
+    padding:0;
+    color: white;
+    transition: 0.3s;
+    }
+
+.username:hover{
+    font-size: 40px;
+    color: #1e1e1e;
+    transition: 0.6s;
+    background-color:white;
+    padding: 5px 50px;
+}
+
+
+.a_button {
+    overflow: hidden;
+    transition: 0.3s;
+    color: inherit;
+}
+
+.a_button:hover {
+    padding: 6px 25px;
+    border: solid 1px;
+    border-radius: 25px;
+    background-color: transparent;
+    transition: 1s;
+}
+
+a {
+    text-decoration: none;
+    }
+
+.submit_button {
+    font-size: 16px;
+    font-family: sans-serif;
+    background-color: transparent;
+    border: 0.5px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    color: grey;
+    transition: 0.6s;
+}
+
+.submit_button:hover {
+    font-size: 20px;
+    background-color: blue;
+    border-radius: 10px;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    transition: 0.8s;
+    cursor: pointer;
+    }
+
+.form_add_user{
+    display: grid;
+    justify-content: center;
+    row-gap: 5px;
+    }
+
+.input_box {
+    background: transparent;
+    border: solid 1px;
+    padding: 5px;
+    border-radius: 5px;
+    color: inherit;
+}
+
+.input_box:hover {
+    background: white;
+    border: solid 1px white;
+    border-radius: 5px;
+    color: black;
+    transition: 0.5s;
+}
+
+img {
+height: 10em;}
+
+.movie_list_box{
+    margin-top: 50px;
+    display: grid;
+    justify-content: space-evenly;
+}
+
+.movie_info_box
+{    display: inline-flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 5px;
+    color: inherit;
+    border: solid 1px;
+    overflow: hidden;}
+
+
+.movie_list{
+     margin: 10px;
+    display: grid;
+    list-style: none;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
+    grid-template-columns: auto auto auto auto auto;
+    column-gap: 0px;
+    row-gap: 50px;}
+
+.movie_container {
+    display: grid;
+    justify-content: center;
+    text-wrap: nowrap;
+    grid-template-columns: 132px;
+    margin: 20px;
+    overflow: hidden;
+    font-size: 20px;
+    transition: 1s;
+    opacity: 0.2;
+}
+
+.movie_container:hover {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.update_delete_buttons{
+display:grid;
+color: inherit;
+}
+
+.form_button {
+    font-size: 16px;
+    font-family: sans-serif;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    transition: 0.6s;
+}
+
+.form_button:hover {
+    color: red;
+    transition: 0.6s;
+    cursor: pointer;
+
+}
+
+.font40{
+    font-size: 40px;
+}
+
+.setting_center {
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    column-gap: 50px;
+    }
+
+.border_bottom {
+border-bottom: 1px solid white;
+}
+
+.flashed_messages{
+    list-style-type: circle;
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    }
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+    display: none;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: center;
+    background: transparent;
+    color: white;
+    position: absolute;
+    margin-top: 10px;
+    padding: 20px;
+    bottom: 70px
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+
+}
+
+.color_button {
+    text-decoration: none;
+    color: transparent;
+    background: transparent;
+    border: none;
+    padding: 50px 50px;
+    border-radius: 5px;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+.color_button:hover {
+    opacity: 1;
+    transition: 0.5s;
+    color: white;
+    font-size: 20px;
+}
+
+.personalised_settings_box {
+
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    gap: 50px;
+    font-family: sans-serif;
+    position: relative;
+    top: 292px;
+}
+
+
+.bg_red {
+    background-color: #d3273e;
+    }
+
+.bg_blue {
+    background-color: #042F45;
+   }
+
+.bg_green {
+    background-color: #007a78;
+    }
+
+.bg_orange {
+
+    background-color: #dc582a;
+   }
+
+.bg_purple {
+    background-color: #5d3754;
+    }
+
+.bg_white {
+    background-color: #FBFBFB;
+}
+
+
