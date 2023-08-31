@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from flask_login import login_user, LoginManager, UserMixin, current_user, logout_user, login_required
 from wtforms import StringField, SubmitField, IntegerField, FloatField, PasswordField
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from API_JSON.API_functionality import API_add_movie
 
 
@@ -66,8 +66,8 @@ class LoginForm(FlaskForm):
 
 class UpdateForm(FlaskForm):
     username = StringField("Username", default=current_user)
-    password = PasswordField("Password", validators=[DataRequired()])
-    check_password = PasswordField("Confirm Password", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=8)])
+    check_password = PasswordField("Confirm Password", validators=[DataRequired(), Length(min=8)])
     submit = SubmitField("Update")
 
 
@@ -394,6 +394,23 @@ def add_user():
             flash("passwords did not match")
 
     return render_template("add_user.html")
+
+
+
+"""
+Error Handling
+"""
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.route("/something")
+def something():
+    return render_template("something.html")
+
 
 
 if __name__ in "__main__":
