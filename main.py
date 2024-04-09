@@ -11,14 +11,12 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from API_JSON.API_functionality import API_add_movie
 
-
 """
 os filepath defined
 """
 # using os to dynamicaly create the path relative to the current scripts location address
-current_directory =  os.path.dirname(os.path.abspath(__file__))
+current_directory = os.path.dirname(os.path.abspath(__file__))
 relative_db_path = os.path.join(current_directory, 'data', 'Userdata.sqlite')
-
 
 """
 Global variables
@@ -127,10 +125,8 @@ class sql_data_manager():
             return users
 
     def get_user_movies():
-
         user_movies = Data.query.filter_by(user_id=current_user.id).all()
         movies = []
-
 
         for data in user_movies:
             movie_id = data.movie_id
@@ -140,9 +136,11 @@ class sql_data_manager():
 
         return movies
 
+
 """
 Main application and APP ROUTES 
 """
+
 
 # Home page
 @app.route("/", methods=["GET", "POST"])
@@ -151,7 +149,8 @@ def Home():
     users = sql_data_manager.list_users()
     return render_template("home.html", users=users)
 
-#Login page
+
+# Login page
 @app.route("/login", methods=["GET", "POST"])
 def Login():
     # sets the form
@@ -188,12 +187,13 @@ def Login():
 The users_home page
 """
 
+
 @app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
     if current_user.is_authenticated:
         movies = sql_data_manager.get_user_movies()
-        return render_template("dashboard.html", user=current_user, movies=movies,)
+        return render_template("dashboard.html", user=current_user, movies=movies, )
 
 
 @app.route("/accountSettings/<int:user_id>", methods=['GET', "POST"])
@@ -201,6 +201,7 @@ def dashboard():
 def account_settings(user_id):
     if current_user.is_authenticated:
         return render_template("account_settings.html", user=current_user, user_id=user_id)
+
 
 @app.route("/accessibility_settings/<int:user_id>", methods=['GET', "POST"])
 @login_required
@@ -213,7 +214,6 @@ def accessibility_settings(user_id):
 @app.route("/update/<int:user_id>", methods=["GET", "POST"])
 @login_required
 def update(user_id):
-
     form = UpdateForm()
 
     if current_user.is_authenticated:
@@ -241,16 +241,16 @@ def update(user_id):
 
                 # if the user did not want to change username
                 if new_password == check_password:
-                        # changes to the desired username and hashes new chosen password
-                        name_to_update.password_hash = bcrypt.generate_password_hash(new_password).decode("utf-8")
-                        try:
-                            db.session.commit()
-                            flash("User Updated Successfully!")
-                            return redirect(url_for("dashboard"))
+                    # changes to the desired username and hashes new chosen password
+                    name_to_update.password_hash = bcrypt.generate_password_hash(new_password).decode("utf-8")
+                    try:
+                        db.session.commit()
+                        flash("User Updated Successfully!")
+                        return redirect(url_for("dashboard"))
 
-                        except Exception as e:
-                            flash(f"There seems to be an error {e}")
-                            return render_template("update.html", name_to_update=name_to_update)
+                    except Exception as e:
+                        flash(f"There seems to be an error {e}")
+                        return render_template("update.html", name_to_update=name_to_update)
                 else:
                     flash("passwords did not match")
 
@@ -262,7 +262,7 @@ def update(user_id):
 @login_required
 def delete(user_id):
     if current_user.is_authenticated:
-        #sets a variable to the current user
+        # sets a variable to the current user
         name_to_delete = current_user
         # gets the user data
         if request.method == "POST":
@@ -283,10 +283,10 @@ def delete(user_id):
 
         return render_template("delete_user.html", user=name_to_delete, user_id=name_to_delete.id)
 
+
 # adds a movie
 @app.route("/dashboard/<int:user_id>/add_movie", methods=["GET", "POST"])
 def add_movie(user_id):
-
     movies = sql_data_manager.get_user_movies()
 
     if request.method == "POST":
@@ -295,10 +295,11 @@ def add_movie(user_id):
         user_notes = request.form.get("notes")
         try:
             movie = API_add_movie(movie_title)
-            new_movie = Movies(id=movie["imdbID"], title=movie["Title"], year=movie["Year"], poster=movie["Poster"], imdb_rating=movie["imdbRating"])
+            new_movie = Movies(id=movie["imdbID"], title=movie["Title"], year=movie["Year"], poster=movie["Poster"],
+                               imdb_rating=movie["imdbRating"])
             user_has_movie = Data.query.filter_by(movie_id=new_movie.id, user_id=user_id).first()
 
-            #checks if user already has the movie in their database
+            # checks if user already has the movie in their database
             if user_has_movie:
                 flash("Movie already in database")
                 return redirect("add_movie")
@@ -307,7 +308,7 @@ def add_movie(user_id):
             check_movie = Movies.query.filter_by(id=new_movie.id).first()
             # if movie is in the database
             if check_movie:
-                #skip adding the movie to the movie table, and links the imdbID to the user_id
+                # skip adding the movie to the movie table, and links the imdbID to the user_id
                 new_data = Data(movie_id=new_movie.id, user_id=user_id, notes=user_notes)
                 db.session.add(new_data)
 
@@ -318,7 +319,7 @@ def add_movie(user_id):
                 new_data = Data(movie_id=new_movie.id, user_id=user_id, notes=user_notes)
                 db.session.add(new_data)
 
-            #commit the session
+            # commit the session
             db.session.commit()
             return redirect(url_for("dashboard"))
 
@@ -328,17 +329,17 @@ def add_movie(user_id):
 
     return render_template("add_movie.html", user=current_user, user_id=user_id, movies=movies)
 
-#update movie
+
+# update movie
 @app.route("/dashboard/<int:user_id>/update_movie/<string:movie_id>", methods=["GET", "POST"])
 def update_movie(user_id, movie_id):
-
     # search data table for the user and movie corrolation
     data_record = Data.query.filter_by(user_id=user_id, movie_id=movie_id).first()
 
     if request.method == "POST":
         new_notes = request.form.get("notes")
         try:
-            #assings the new value to the notes column
+            # assings the new value to the notes column
             data_record.notes = new_notes
             flash("Successfully updated the movie")
             db.session.commit()
@@ -349,7 +350,6 @@ def update_movie(user_id, movie_id):
     return render_template("update_movie.html", user=current_user, user_id=user_id, movie_id=movie_id)
 
 
-
 # deletes a users movie
 @app.route("/dashboard/<int:user_id>/delete_movie/<string:movie_id>", methods=["GET"])
 def delete_movie(user_id, movie_id):
@@ -357,8 +357,6 @@ def delete_movie(user_id, movie_id):
     db.session.delete(chosen_movie)
     db.session.commit()
     return redirect(url_for("dashboard"))
-
-
 
 
 # add user page
@@ -378,7 +376,8 @@ def add_user():
             if already_user is None:
                 # adds user to the session and commits the new user to the database
                 try:
-                    new_user = Users(username=new_username, password_hash=bcrypt.generate_password_hash(password).decode('utf-8'))
+                    new_user = Users(username=new_username,
+                                     password_hash=bcrypt.generate_password_hash(password).decode('utf-8'))
                     db.session.add(new_user)
                     db.session.commit()
                     return redirect(url_for("Home"))
@@ -396,7 +395,6 @@ def add_user():
     return render_template("add_user.html")
 
 
-
 """
 Error Handling
 """
@@ -412,8 +410,7 @@ def something():
     return render_template("something.html")
 
 
-
 if __name__ in "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-     # with app.app_context():
-     #      db.create_all()
+    # with app.app_context():
+    #      db.create_all()
