@@ -410,7 +410,6 @@ def something():
     return render_template("something.html")
 
 
-if __name__ in "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+app.run(port=8000, debug=True)
     # with app.app_context():
     #      db.create_all()
