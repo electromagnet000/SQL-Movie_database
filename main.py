@@ -63,7 +63,7 @@ class LoginForm(FlaskForm):
 
 
 class UpdateForm(FlaskForm):
-    username = StringField("Username", default=current_user)
+    username = StringField("Username", default=current_user, validators=[DataRequired(), Length(min=1, max=12)])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=8)])
     check_password = PasswordField("Confirm Password", validators=[DataRequired(), Length(min=8)])
     submit = SubmitField("Update")

@@ -34,7 +34,7 @@
 <form class="form_add_user" action="/add_users" method="POST">
   <label for="username">Enter a chosen username</label>
 
-    <input class="input_box" type="text" id="username" name="username"  value="{{username}}" placeholder="username" required minlength="1">
+    <input class="input_box" type="text" id="username" name="username"  value="{{username}}" placeholder="username between 1 and 12 characters" required minlength="1" maxlength="12">
     <br>
 
     <label for="password">Enter a chosen password</label>
