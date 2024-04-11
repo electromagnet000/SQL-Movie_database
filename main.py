@@ -408,6 +408,3 @@ def page_not_found(e):
 @app.route("/something")
 def something():
     return render_template("something.html")
-
-if __name__ in "__main__":
-    app.run(debug=True)
