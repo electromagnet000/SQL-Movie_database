@@ -36,7 +36,7 @@
     {{ form.hidden_tag() }}
     {{ form.username.label }}
     {% if user_name %}
-        <input class="input_box" type="text" name="username" id="username" value="{{ username }}" placeholder="{{ user_name }}">
+        <input class="input_box" type="text" name="username" id="username" value="{{ user_name }}" placeholder="{{ user_name }}">
     {% else %}
         <input class="input_box" type="text" name="username" id="username" value="{{ username }}" placeholder="enter username">
     {% endif %}
