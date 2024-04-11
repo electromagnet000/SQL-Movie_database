@@ -20,7 +20,7 @@
 <form action="/delete/{{ user.id }}" method="POST">
   <label for="confirm_username">Enter username to delete user</label>
   <input class="input_box" type="text" id="confirm_username" name="confirm_username" value="{{ confirm_username }}" placeholder="{{ user.username }}">
-    <input class="submit_button" type="submit" value="Submit">
+    <input class="submit_button" type="submit" value="Submit" onclick="sessionClear()">
 </form>
         </div>
 <div>

@@ -26,6 +26,9 @@ function logout() {
     window.location.href = "/"
 }
 
+function sessionClear() {
+    sessionStorage.clear();
+}
 
 var myInput = document.getElementById("password");
 var letter = document.getElementById("letter");

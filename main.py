@@ -179,7 +179,7 @@ def Login():
             else:
                 flash("user not found")
         else:
-            flash("there seems to be an error with your input please regular characters and enter both fields")
+            flash("there seems to be an error with your input please enter regular characters and enter both fields")
     return render_template("login.html", form=form, user_name=user_name)
 
 
@@ -409,3 +409,5 @@ def page_not_found(e):
 def something():
     return render_template("something.html")
 
+if __name__ in "__main__":
+    app.run(debug=True)
