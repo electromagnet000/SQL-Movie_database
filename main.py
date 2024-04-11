@@ -409,8 +409,3 @@ def page_not_found(e):
 def something():
     return render_template("something.html")
 
-
-if __name__ in "__main__":
-    app.run(debug=True)
-    # with app.app_context():
-    #      db.create_all()
